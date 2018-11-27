@@ -20,6 +20,9 @@ class SearchUserViewController: UIViewController
     
     var searchViaEmail:Bool = false
     
+    var yPos_txtUsernameOrEmail:CGFloat?
+    var yPos_usernameContainerView:CGFloat?
+    
     // MARK: - View Controller Life Cycle Methods
     
     override func awakeFromNib()
@@ -54,6 +57,10 @@ class SearchUserViewController: UIViewController
     {
         super.viewWillAppear(animated)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         self.updateViews()
         
         
@@ -73,7 +80,9 @@ class SearchUserViewController: UIViewController
     {
         super .viewWillDisappear(animated)
         
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         
         NotificationCenter.default.removeObserver(self)
     }
@@ -86,7 +95,51 @@ class SearchUserViewController: UIViewController
         
     }
     
-
+    // MARK: - Keyboard Notifications
+    @objc func keyboardWillShow(notification: Notification)
+    {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        {
+            self.yPos_txtUsernameOrEmail = self.txtUsernameOrEmail.frame.origin.y
+            
+            self.yPos_usernameContainerView = self.usernameContainerView.frame.origin.y
+            
+            
+            let newPosY:CGFloat = (self.view.frame.size.height - keyboardSize.height)
+            
+            if(self.txtUsernameOrEmail.frame.origin.y > newPosY)
+            {
+                self.txtUsernameOrEmail.frame.origin.y = newPosY
+            }
+            
+            if(self.usernameContainerView.frame.origin.y > newPosY)
+            {
+                self.usernameContainerView.frame.origin.y = newPosY
+            }
+            
+            
+            print("notification: Keyboard will show")
+            
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(notification: Notification)
+    {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        {
+            if let yPos:CGFloat = self.yPos_txtUsernameOrEmail
+            {
+                self.txtUsernameOrEmail.frame.origin.y = yPos
+            }
+            
+            if let yPos:CGFloat = self.yPos_usernameContainerView
+            {
+                self.usernameContainerView.frame.origin.y = yPos
+            }
+            
+        }
+    }
     
     
     // MARK: - Other Methods
