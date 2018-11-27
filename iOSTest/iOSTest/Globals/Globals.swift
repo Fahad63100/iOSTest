@@ -82,7 +82,9 @@ class Globals
     public let ksubjectNextScreen_ClassAssignments:String = "ClassAssignments"
     
     // MARK: -  User Session
-    public let kUserSession__loggedInUserObjKey:String = "UserSessionLoggedInUserObjKey"
+    public let kUserSession__UserObjKey:String = "UserSessionLoggedInUserObjKey"
+    
+    public let kUserSession__UserObjArrayKey:String = "UserObjArrayKey"
     
     
     // SideBarMenu.storyboard

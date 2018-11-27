@@ -12,24 +12,17 @@ import QuartzCore
 
 class UserDetailsViewController: UIViewController
 {
-    @IBOutlet weak var topLogoContainerView: UIView!
+    var foundUserObj:User?
     
-    @IBOutlet weak var txtUsername: UITextField!
-    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet var userImageView: UIImageView!
+    @IBOutlet var userImageLoadingActivityView: UIActivityIndicatorView!
     
-    @IBOutlet weak var bottomLineView_Email: UIView!
-    @IBOutlet weak var bottomLineView_password: UIView!
-    @IBOutlet weak var bottomLineView_SelectRole: UIView!
+    @IBOutlet var lblUsername: UILabel!
     
-    @IBOutlet weak var btnLogin: UIButton!
-    @IBOutlet weak var btnForgotPassword: UIButton!
-    @IBOutlet weak var btnSelectRole: UIButton!
+    @IBOutlet var lblUserEmail: UILabel!
     
-    @IBOutlet weak var usernameContainerView: UIView!
-    @IBOutlet weak var passwordContainerView: UIView!
-    @IBOutlet weak var selectRoleContainerView: UIView!
+    @IBOutlet var userInfoContainerVew: UIView!
     
-    var selectedRole:String?
     
     // MARK: - View Controller Life Cycle Methods
     
@@ -95,98 +88,55 @@ class UserDetailsViewController: UIViewController
     {
         AsyncUtil.onMainThread({
             
-            self.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.navigationBar.isHidden = false
             
-            self.title = NSLocalizedString("login", comment: "Navigation Title")
+            self.title = NSLocalizedString("User Details", comment: "Navigation Title")
             
-            let placeHolderTextColor:UIColor = UIColor.init(hexString: Globals.shared.colorForTextBoxPlaceHolder)
-            
-            let attributedPlaceholderStringUsername:NSAttributedString = NSAttributedString(string: self.txtUsername.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: placeHolderTextColor])
-            self.txtUsername.attributedPlaceholder = attributedPlaceholderStringUsername
-            
-            let attributedPlaceholderStringPW:NSAttributedString = NSAttributedString(string: self.txtPassword.placeholder!, attributes: [NSAttributedString.Key.foregroundColor: placeHolderTextColor])
-            self.txtPassword.attributedPlaceholder = attributedPlaceholderStringPW
-            
-            let borderColorOfTextFiels:UIColor = UIColor.init(hexString: Globals.shared.colorForTextBoxBorders)
-            
-            
-            self.usernameContainerView.addRightBorderWithColor(color: borderColorOfTextFiels, width: 1.0)
-            self.usernameContainerView.addBottomBorderWithColor(color: borderColorOfTextFiels, width: 1.0)
-            
-            self.passwordContainerView.addRightBorderWithColor(color: borderColorOfTextFiels, width: 1.0)
-            self.passwordContainerView.addBottomBorderWithColor(color: borderColorOfTextFiels, width: 1.0)
-            
-            self.selectRoleContainerView.addRightBorderWithColor(color: borderColorOfTextFiels, width: 1.0)
-            self.selectRoleContainerView.addBottomBorderWithColor(color: borderColorOfTextFiels, width: 1.0)
+           
             
         }, delay: 0.0)
         
-        self.updateCircularViewForTopLogo()
     }
     
     func updateViews() -> Void
     {
         AsyncUtil.onMainThread({
             
-           self.navigationController?.navigationBar.isHidden = true
+           self.navigationController?.navigationBar.isHidden = false
+            
+
+            let placeHolderImage:UIImage? = UIImage.init(named: "userPlaceHolderImage")
+            self.userImageView.imageFromServerURL((self.foundUserObj?.userPictureURLString)!, placeHolder: placeHolderImage, userImageLoadingActivityView:self.userImageLoadingActivityView)
+            
+            
+            
+            guard let fname:String = self.foundUserObj?.firstName else
+            {
+                fatalError("fname is nil")
+            }
+            
+            guard let lname:String = self.foundUserObj?.lastName else
+            {
+                fatalError("lname is nil")
+            }
+            
+            self.lblUsername.text = fname + " " + lname
+            
+            self.lblUserEmail.text = self.foundUserObj?.userEmail
+            
+
+            
+            let borderColorOfTextFields:UIColor = UIColor.init(hexString: Globals.shared.colorForTextBoxBorders)
+            
+            self.userInfoContainerVew.addRightBorderWithColor(color: borderColorOfTextFields, width: 1.0)
+            self.userInfoContainerVew.addBottomBorderWithColor(color: borderColorOfTextFields, width: 1.0)
+            
             
         }, delay: 0.0)
     }
     
-    // MARK: - Other Methods
-    func updateCircularViewForTopLogo()
-    {
-        AsyncUtil.onMainThread({
-            
-            let container = UIView(frame: self.topLogoContainerView.bounds)
-            container.backgroundColor = .clear
-            
-            let buttonRadius: CGFloat = (container.frame.width)/2
-            let buttonSize = CGSize(width: buttonRadius * 2, height: buttonRadius * 2)
-            let buttonPath = UIBezierPath(arcCenter: CGPoint(x: buttonRadius, y: buttonRadius), radius: buttonRadius, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
-            
-            // only for shadow
-            let buttonBackgroundView = UIView(frame: CGRect(origin: .zero, size: buttonSize))
-            buttonBackgroundView.backgroundColor = .clear
-            buttonBackgroundView.center = container.center
-            buttonBackgroundView.layer.masksToBounds = false
-            buttonBackgroundView.layer.cornerRadius = buttonRadius
-            buttonBackgroundView.layer.shadowOffset = .zero
-            buttonBackgroundView.layer.shadowRadius = 5
-            buttonBackgroundView.layer.shadowOpacity = 0.5
-            buttonBackgroundView.layer.shadowPath = buttonPath.cgPath
-            container.addSubview(buttonBackgroundView)
-            
-            // circle button view
-            let buttonView1 = UIView(frame: CGRect(origin: .zero, size: buttonSize))
-            buttonView1.backgroundColor = .white
-            buttonView1.frame.origin = .zero
-            let buttonShape1 = CAShapeLayer()
-            buttonShape1.path = buttonPath.cgPath
-            buttonView1.layer.mask = buttonShape1
-            buttonBackgroundView.addSubview(buttonView1)
-            
-            
-            let marginInnerCircle:CGFloat = 20.0
-            
-            let buttonRadius2: CGFloat = (buttonView1.frame.width - marginInnerCircle)/2
-            let buttonSize2 = CGSize(width: buttonRadius2 * 2, height: buttonRadius2 * 2)
-            let buttonPath2 = UIBezierPath(arcCenter: CGPoint(x: buttonRadius2, y: buttonRadius2), radius: buttonRadius2, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
-            
-            // circle button view 2
-            let buttonView2:UIImageView = UIImageView(frame: CGRect(origin: .zero, size: buttonSize2))
-            buttonView2.center = buttonBackgroundView.center
-            buttonView2.backgroundColor = .clear
-            let buttonShape2 = CAShapeLayer()
-            buttonShape2.path = buttonPath2.cgPath
-            buttonView2.layer.mask = buttonShape2
-            buttonView2.image = UIImage.init(named: "school_logo")
-            buttonView1.addSubview(buttonView2)
-            
-            self.topLogoContainerView.addSubview(container)
-            
-        }, delay: 0.0)
-    }
+    
+    
     
     
  
@@ -206,66 +156,7 @@ class UserDetailsViewController: UIViewController
        
     }
    
-    // MARK: Valication
-    func validateForm() -> Bool
-    {
-        var isSuccess = false
-        var errorMsg = ""
-        
-        if !(ValidationHelper.isValidEmail(testStr: self.txtUsername.text!))
-        {
-            errorMsg = "Please enter a valid \"Email Address\""
-        }
-        else if ValidationHelper.isStringEmpty(self.txtPassword.text!)
-        {
-            errorMsg = "Please enter your Password"
-        }
-        else if ( self.txtPassword.text!.count < Globals.shared.kMinimumPasswordLength )
-        {
-            errorMsg = "Password must be of minimum \(Globals.shared.kMinimumPasswordLength) characters length"
-        }
-//        else if let userRole = self.selectedRole {
-//
-//            if ValidationHelper.isStringEmpty(userRole)
-//            {
-//                errorMsg = "Please select a User Role"
-//            }
-//
-//        }
-//        else
-//        {
-//            errorMsg = "Please select a User Role"
-//        }
-        
-        if !ValidationHelper.isStringEmpty(errorMsg)
-        {
-            let InvalidInputStr = NSLocalizedString("warning", comment: "Alert Type")
-            
-            //////////////////////////////
-            // Showe Alert
-            //////////////////////////////
-            let popUpTitle:String? = InvalidInputStr
-            let popUpDescriptions:String? = errorMsg
-            
-            if self.parent != nil
-            {
-                let alertController = UIAlertController(title: popUpTitle,
-                                                        message: popUpDescriptions,
-                                                        preferredStyle: .alert)
-                
-                self.present(alertController, animated: true, completion: nil)
-            }
-            ////////////////////////////////////////////
-            
-            isSuccess = false
-        }
-        else
-        {
-            isSuccess = true
-        }
-        
-        return isSuccess
-    }
+    
 
     // MARK: - Status Bar Style
     override var prefersStatusBarHidden: Bool

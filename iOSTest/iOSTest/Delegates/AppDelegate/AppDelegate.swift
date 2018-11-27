@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         self.setUpAppearance()
         
-        let loginVC:SearchUserViewController = mainStoryboardObj!.instantiateViewController(withIdentifier: Globals.shared.kStoryBoardIdentifiersForVC_SearchUserVC) as! SearchUserViewController
-        self.navigationController?.viewControllers = [loginVC]
+        let searchUserVC:SearchUserViewController = mainStoryboardObj!.instantiateViewController(withIdentifier: Globals.shared.kStoryBoardIdentifiersForVC_SearchUserVC) as! SearchUserViewController
+        self.navigationController?.viewControllers = [searchUserVC]
         
         self.window?.rootViewController = self.navigationController
         self.window?.makeKeyAndVisible()
