@@ -12,6 +12,8 @@ import QuartzCore
 
 class UserDetailsViewController: UIViewController
 {
+    
+    
     var foundUserObj:User?
     
     @IBOutlet var userImageView: UIImageView!

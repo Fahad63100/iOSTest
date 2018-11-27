@@ -128,7 +128,9 @@ class SearchUserViewController: UIViewController
     {
         if(self.validateForm())
         {
-            let foundUserObj:User? = UserViewModal.sharedInstance.findUser(userInputString: self.txtUsernameOrEmail.text!, isUserInputAsEmail: self.searchViaEmail)
+            let searchText:String = (self.txtUsernameOrEmail.text?.lowercased())!
+            
+            let foundUserObj:User? = UserViewModal.sharedInstance.findUser(userInputString: searchText, isUserInputAsEmail: self.searchViaEmail)
             if let userObj:User = foundUserObj
             {
                 let mainStoryboardObj:UIStoryboard? = UIStoryboard(name: Globals.shared.kStoryBoardName_MainStoryboard, bundle: Bundle.main)
@@ -136,6 +138,31 @@ class SearchUserViewController: UIViewController
                 let userDetailsVC:UserDetailsViewController = mainStoryboardObj!.instantiateViewController(withIdentifier: Globals.shared.kStoryBoardIdentifiersForVC_UserDetailsVC) as! UserDetailsViewController
                 userDetailsVC.foundUserObj = userObj
                 self.navigationController?.show(userDetailsVC, sender: self)
+            }
+            else
+            {
+                //////////////////////////////
+                // Showe Alert
+                //////////////////////////////
+                let popUpTitle:String? = "User Search"
+                let popUpDescriptions:String? = "User Not Found"
+                
+                if self.parent != nil
+                {
+                    let alertController = UIAlertController(title: popUpTitle,
+                                                            message: popUpDescriptions,
+                                                            preferredStyle: .alert)
+                    
+                    alertController.addAction(UIAlertAction(title: "Ok",
+                                                            style: .default,
+                                                            handler: { (action: UIAlertAction!) in
+                                                                print("Handle Ok logic here")
+                                                                
+                    }))
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                ////////////////////////////////////////////
             }
         }
     }

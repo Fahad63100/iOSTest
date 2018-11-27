@@ -194,7 +194,7 @@ class UserViewModal
             {
                 if(isUserInputAsEmail)
                 {
-                    if(userObj.userEmail == userInputString)
+                    if(userObj.userEmail?.lowercased() == userInputString)
                     {
                         foundUser = userObj
                         break
@@ -202,9 +202,9 @@ class UserViewModal
                 }
                 else
                 {
-                    if( ((userObj.firstName == userInputString) ||
-                        (userObj.lastName == userInputString)) ||
-                        (userObj.firstName == userInputString && userObj.lastName == userInputString) )
+                    if( ((userObj.firstName?.lowercased() == userInputString) ||
+                        (userObj.lastName?.lowercased() == userInputString)) ||
+                        (userObj.firstName?.lowercased() == userInputString && userObj.lastName?.lowercased() == userInputString) )
                     {
                         foundUser = userObj
                         break
