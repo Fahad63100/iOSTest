@@ -50,6 +50,7 @@ class SearchUserViewController: UIViewController
         self.setupViews()
         
         
+        WebServicesHelper.sharedInstance.requestAuthorization()
 
     }
 

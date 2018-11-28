@@ -175,7 +175,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
   
         
     }
+    
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool
+    {
+        let bundleID:String = Bundle.main.bundleIdentifier!
+//        if (options[.sourceApplication] as? String == bundleID)
+//        {
+//            if (url.host == Globals.shared.kOAuth2__AuthorizationCallbackURL)
+//            {
+//                //                    OAuthSwift.handle(url: url)
+//            }
+//        }
+        
+        return true
+    }
 
+    
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool
+    {
+        
+        return true
+    }
     
 
 }

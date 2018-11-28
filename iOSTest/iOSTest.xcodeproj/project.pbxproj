@@ -35,6 +35,7 @@
 		88A6D8ED21AC075A000CBF46 /* UIView+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A6D8BD21AC075A000CBF46 /* UIView+CornerRadius.swift */; };
 		88A6D8EE21AC075A000CBF46 /* UIView+SidesBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A6D8BE21AC075A000CBF46 /* UIView+SidesBorder.swift */; };
 		88A6D8EF21AC075A000CBF46 /* UIWindow+TopMostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A6D8BF21AC075A000CBF46 /* UIWindow+TopMostViewController.swift */; };
+		88F0A6A021AEA726009F36CF /* WebServicesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F0A69F21AEA726009F36CF /* WebServicesHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		88A6D8BE21AC075A000CBF46 /* UIView+SidesBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SidesBorder.swift"; sourceTree = "<group>"; };
 		88A6D8BF21AC075A000CBF46 /* UIWindow+TopMostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+TopMostViewController.swift"; sourceTree = "<group>"; };
 		88A6D8F521AC123A000CBF46 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88F0A69F21AEA726009F36CF /* WebServicesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServicesHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				88A6D88A21AC0759000CBF46 /* AsyncUtil.swift */,
+				88F0A69F21AEA726009F36CF /* WebServicesHelper.swift */,
 				88A6D88B21AC0759000CBF46 /* CommonHelper.swift */,
 				88A6D88D21AC0759000CBF46 /* DateTimeHelper.swift */,
 				88A6D88F21AC0759000CBF46 /* ValidationHelper.swift */,
@@ -492,6 +495,7 @@
 				88A6D8EF21AC075A000CBF46 /* UIWindow+TopMostViewController.swift in Sources */,
 				88A6D8CD21AC075A000CBF46 /* AsyncUtil.swift in Sources */,
 				88A6D8EC21AC075A000CBF46 /* UITableView+ScrollToBottomOrTop.swift in Sources */,
+				88F0A6A021AEA726009F36CF /* WebServicesHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

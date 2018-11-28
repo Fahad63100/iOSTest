@@ -141,5 +141,10 @@ class Globals
     public let kColor__AppColorScheme_NavBackGroundColor:String = "#019AE8"
     
     
+    // Redirect URL
+    // iOSTestCallBack://accessToken
+    public let kOAuth2__AuthorizationCallbackURL:String = "iOSTestCallBack://accessToken"
+    
+    
     
 }

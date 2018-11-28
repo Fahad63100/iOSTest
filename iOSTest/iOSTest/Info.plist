@@ -20,10 +20,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.FR.SMS</string>
+			<string>com.FR.iOSTest</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>TestLinkToApp</string>
+				<string>iOSTestCallBack</string>
 			</array>
 		</dict>
 	</array>
@@ -107,13 +107,13 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
 		<key>NSAllowsArbitraryLoadsForMedia</key>
-		<false/>
+		<true/>
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
-		<false/>
+		<true/>
 		<key>NSAllowsLocalNetworking</key>
-		<false/>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>https://testdomain.com</key>
