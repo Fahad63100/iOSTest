@@ -27,12 +27,12 @@ class WebServicesHelper
         let usernameStr:String = "fahad63100"
         
         // Build the body message to request the token to the web app
-        let bodyStr:String = "client_id=" + client_id + "&client_secret=" + client_secret + "&redirect_uri=" + Globals.shared.kOAuth2__AuthorizationCallbackURL + "&scope=" + scopStr + "&state=" + stateStr + "username=" + usernameStr
+        let bodyStr:String = ""
         
         // Setup the request
-        let myURL:URL = NSURL(string: "https://api.github.com/authorizations")! as URL
+        let myURL:URL = NSURL(string: "https://api.github.com/authorizations/")! as URL
         let request = NSMutableURLRequest(url: myURL)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         

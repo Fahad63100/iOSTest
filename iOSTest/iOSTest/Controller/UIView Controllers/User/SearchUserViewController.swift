@@ -65,13 +65,13 @@ class SearchUserViewController: UIViewController
         self.updateViews()
         
         
-        self.btnSearch.isUserInteractionEnabled = false
-        self.btnSearch.setTitle("Please Wait", for: .normal)
+//        self.btnSearch.isUserInteractionEnabled = false
+//        self.btnSearch.setTitle("Please Wait", for: .normal)
         
-        UserViewModal.sharedInstance.createAndArchiveUsers()
+//        UserViewModal.sharedInstance.createAndArchiveUsers()
         
-        self.btnSearch.isUserInteractionEnabled = true
-        self.btnSearch.setTitle("Search", for: .normal)
+//        self.btnSearch.isUserInteractionEnabled = true
+//        self.btnSearch.setTitle("Search", for: .normal)
         
         
         
