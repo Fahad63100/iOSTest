@@ -18,62 +18,63 @@ class WebServicesHelper
     
     func requestAuthorization() -> Void
     {
-        let client_id:String = "312e4222e4711b50e4c2"
-        let client_secret:String = "edfa2b74bd0d9ce3b906b970e66ce929cf9026c8"
-        //username
-        let scopStr:String = "user"
-        let stateStr:String = "gddfh3454564bgd"
+        let headers = [
+            "content-type": "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+            "cache-control": "no-cache",
+            "Postman-Token": "6fbee882-e4b0-49df-8d09-f102eac4a583"
+        ]
         
-        let usernameStr:String = "fahad63100"
+        let parameters = [
+            [
+                "name": "email",
+                "value": "athar@gmail.com"
+            ],
+            [
+                "name": "password",
+                "value": "123456"
+            ]
+        ]
         
-        // Build the body message to request the token to the web app
-        let bodyStr:String = ""
+        let boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW"
         
-        // Setup the request
-        let myURL:URL = NSURL(string: "https://api.github.com/authorizations/")! as URL
-        let request = NSMutableURLRequest(url: myURL)
-        request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        request.setValue(client_id, forHTTPHeaderField: "client_id")
-        request.setValue(client_secret, forHTTPHeaderField: "client_secret")
-        request.setValue(Globals.shared.kOAuth2__AuthorizationCallbackURL, forHTTPHeaderField: "redirect_uri")
-        request.setValue(scopStr, forHTTPHeaderField: "scope")
-        request.setValue(stateStr, forHTTPHeaderField: "state")
-        request.setValue(usernameStr, forHTTPHeaderField: "username")
-        
-        request.httpBody = bodyStr.data(using: String.Encoding.utf8)!
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            (data, response, error) -> Void in
-            if let unwrappedData = data {
-                
-                do {
-                    
-                    // Convert the Json object to an array of dictionaries
-                    let tokenDictionary:NSDictionary = try JSONSerialization.jsonObject(with: unwrappedData, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                    
-                    // Get the token
-                    let token:String = tokenDictionary["access_token"] as! String
-                    
-                    // Keep record of the token
-//                    UserDefaults.standard.setva
-
-                    
+        var body = ""
+        var error: NSError? = nil
+        for param in parameters {
+            let paramName = param["name"]!
+            body += "--\(boundary)\r\n"
+            body += "Content-Disposition:form-data; name=\"\(paramName)\""
+            if let filename = param["fileName"] {
+                let contentType = param["content-type"]!
+                let fileContent = String(contentsOfFile: filename, encoding: String.Encoding.utf8)
+                if (error != nil) {
+                    print(error)
                 }
-                catch {
-                    // Wrong credentials
-                    
-                    
-                    
-                }
+                body += "; filename=\"\(filename)\"\r\n"
+                body += "Content-Type: \(contentType)\r\n\r\n"
+                body += fileContent
+            } else if let paramValue = param["value"] {
+                body += "\r\n\r\n\(paramValue)"
             }
         }
-        task.resume()
         
+        let request = NSMutableURLRequest(url: NSURL(string: "http://216.200.116.25/around-uae/api/login")! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = headers
+        request.httpBody = postData as Data
         
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? HTTPURLResponse
+                print(httpResponse)
+            }
+        })
         
+        dataTask.resume()
     }
 
 }

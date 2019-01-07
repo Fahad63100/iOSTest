@@ -6,6 +6,9 @@
 //  Copyright © 2018 SMS. All rights reserved.
 //
 
+// Json obj mapper
+// http://www.jsoncafe.com/?json=1
+
 import UIKit
 
 class Globals
